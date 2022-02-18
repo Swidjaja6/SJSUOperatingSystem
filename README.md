@@ -2,6 +2,8 @@
 
 [Link to Documentation](https://docs.google.com/document/d/1oxKF2Op0ycr6g2Da_YqT2-a3mmvXrkOrC8Fc69U4vOY/edit?usp=sharing)
 
+[Link to Supporting Repository](https://github.com/Swidjaja6/OpSysWork)
+
 Operating System Project taken up under the sponsorship of San Jose State University's Society of Computer and Software Engineers. This will be the main repository of this project which will consist of the code for each of the components. 
 
 ## Project Guidelines
