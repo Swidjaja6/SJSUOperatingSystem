@@ -1,1 +1,0 @@
-# SJSU Operating System Project
