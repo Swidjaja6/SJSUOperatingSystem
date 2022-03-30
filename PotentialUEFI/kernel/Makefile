@@ -4,7 +4,7 @@ buildimg:
 	mkfs.vfat bin/MyOS.img
 	mmd -i bin/MyOS.img ::/EFI
 	mmd -i bin/MyOS.img ::/EFI/BOOT
-	mcopy -i bin/MyOS.img ../gnu-efi/x86_64/bootloader/main.efi
+	mcopy -i bin/MyOS.img ../gnu-efi/x86_64/bootloader/main.efi ::/EFI/BOOT
 	mcopy -i bin/MyOS.img startup.nsh ::
 
 # -m = RAM e.g. 256M = 256 megabytes of RAM
