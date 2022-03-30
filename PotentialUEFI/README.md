@@ -1,8 +1,8 @@
 # UEFI Application
 Simple EFI Application to say Hello, World. Will be adding more
 
-gnu-efi - Environment for creating UEFI applications 
-OVMFBin - Contains binaries required for UEFI to be started on QEMU instead of the default BIOS
+gnu-efi - Environment for creating UEFI applications<br/>
+OVMFBin - Contains binaries required for UEFI to be started on QEMU instead of the default BIOS<br/>
 kernel - Storage for kernel, will contain image file for QEMU.
 
 ## Instructions for running UEFI
