@@ -18,3 +18,5 @@ Direct yourself to PotentialUEFI/kernel, create a new directory called bin, dire
 Now, run ```make buildimg``` to build the image with the parameters (take a look in the Makefile on how they are made) and say ```make run``` to run it. 
 
 QEMU should display "Hello, World!". If not, contact me on Discord. 
+
+## Soon Windows instructions
