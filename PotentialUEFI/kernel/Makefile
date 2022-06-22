@@ -15,12 +15,13 @@ DIRS = $(wildcard $(SRCDIR)/*)
 kernel: $(OBJS) link
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
-		@echo "[MAKE] Compiling $^..."
+		@ echo "[MAKE] Compiling $^..."
+		@ mkdir -p $ (@D)
 		gcc $(CFLAGS) -c $^ -o $@
 
 link:
 		@ echo !==== LINKING
-		ld $(LDFLAGS) -o  bin/kernel.elf $(OBJS)
+		ld $(LDFLAGS) -o  $(BUILDDIR)/kernel.elf $(OBJS)
 
 
 buildimg:
@@ -31,7 +32,7 @@ buildimg:
 	mmd -i bin/MyOS.img ::/EFI/BOOT
 	mcopy -i bin/MyOS.img ../gnu-efi/x86_64/bootloader/main.efi ::/EFI/BOOT
 	mcopy -i bin/MyOS.img startup.nsh ::
-	mcopy -i bin/MyOS.img bin/kernel.elf ::
+	mcopy -i bin/MyOS.img $(BUILDDIR)/kernel.elf ::
 
 # -m = RAM e.g. 256M = 256 megabytes of RAM
 # -cpu = Specifies CPU, e.g. qemu64 CPU
