@@ -1,5 +1,5 @@
 CFLAGS = -ffreestanding -fshort-wchar
-LDFLAGS = -T kernel.ld -shared -Bsymbolic -nostdlib
+LDFLAGS = -T kernel.ld -static -Bsymbolic -nostdlib
 
 SRCDIR := src
 OBJDIR := lib
