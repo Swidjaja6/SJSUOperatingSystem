@@ -16,7 +16,7 @@ kernel: $(OBJS) link
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 		@ echo "[MAKE] Compiling $^..."
-		@ mkdir -p $ (@D)
+		@ mkdir -p $ @D
 		gcc $(CFLAGS) -c $^ -o $@
 
 link:

@@ -4,7 +4,16 @@
 
 typedef unsigned long long size_t;
 
-void InitializeGOP() {
+typedef struct {
+        void* BaseAddress;
+        size_t BufferSize;
+        unsigned int Width;
+        unsigned int Height;
+        unsigned int PixelsPerScanLine;
+} Framebuffer;
+
+Framebuffer framebuffer;
+Framebuffer* InitializeGOP() {
         EFI_GUID gopGuid = EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID;
         EFI_GRAPHICS_OUTPUT_PROTOCOL* gop;
         EFI_STATUS status;
@@ -12,11 +21,19 @@ void InitializeGOP() {
         status = uefi_call_wrapper(BS->LocateProtocol, 3, &gopGuid, NULL, (void**)&gop);
         if(EFI_ERROR(status)) {
                 Print(L"Unable to locate GOP\n\r");
-                return;
+                return NULL;
         }
         else {
                 Print(L"Located GOP\n\r"); 
         }
+
+        framebuffer.BaseAddress = (void*)gop->Mode->FrameBufferBase;
+        framebuffer.BufferSize = gop->Mode->FrameBufferSize;
+        framebuffer.Width = gop->Mode->Info->HorizontalResolution;
+        framebuffer.Height = gop->Mode->Info->VerticalResolution;
+        framebuffer.PixelsPerScanLine = gop->Mode->Info->PixelsPerScanLine;
+
+        return &framebuffer;
 }
 
 EFI_FILE* LoadFile(EFI_FILE* Directory, CHAR16* Path, EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE* SystemTable) {
@@ -109,11 +126,18 @@ EFI_STATUS efi_main (EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable) {
 
         Print(L"Kernel Loaded \n\r");
 
-        int (*KernelStart)() = ((__attribute__((sysv_abi)) int(*)() ) header.e_entry);
+        void (*KernelStart)(Framebuffer*) = ((__attribute__((sysv_abi)) void(*)(Framebuffer*) ) header.e_entry);
+        
+        Framebuffer* fb = InitializeGOP();
+        
+        Print(L"Base: 0x%x\n\rSize: 0x%x\n\rWidth: %d\n\rHeight: %d\n\rPixelsPerScanLine: %d\n\r \n\r",
+        fb->BaseAddress,
+        fb->BufferSize, 
+        fb->Width, 
+        fb->Height, 
+        fb->PixelsPerScanLine);
 
-        InitializeGOP();
-
-        Print(L"%d\r\n", KernelStart());
+        KernelStart(fb);
 
 	return EFI_SUCCESS;
 }
